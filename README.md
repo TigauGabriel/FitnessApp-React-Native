@@ -1,36 +1,36 @@
-# FitnessApp - O aplicatie de Sanatate si Fitness
+# FitnessApp - A Health and Fitness Application
 
-Acesta este un proiect personal, o aplicatie mobila (iOS & Android) pe care am construit-o in React Native (Expo). Scopul a fost sa creez o aplicatie simpla si utila pentru oricine vrea sa-si monitorizeze activitatea fizica.
-
----
-
-## ✨ Functionalitati
-
-* **Contor de Pasi:** Foloseste senzorul de miscare al telefonului pentru a afisa pasii facuti in ziua curenta.
-* **Istoric Antrenamente:** Utilizatorii pot adauga, vizualiza si sterge antrenamentele salvate.
-* **Planuri Alimentare:** O mica biblioteca de planuri de dieta (Keto, Rina etc.) cu descrieri.
-* **Calculator IMC:** Un calculator simplu pentru Indicele de Masa Corporala.
-* **Cronometru:** Un cronometru cu functie de "Tura" (Lap) pentru inregistrarea timpilor.
+This is a personal project, a mobile app (iOS & Android) I built using React Native (Expo). The goal was to create a simple and useful tool for anyone looking to monitor their physical activity.
 
 ---
 
-## 🛠️ Tehnologii Folosite
+## ✨ Features
+
+* **Step Counter:** Uses the phone's motion sensor to display the current day's steps.
+* **Workout History:** Users can add, view, and delete their saved workouts.
+* **Diet Plans:** A small library of diet plans (Keto, Rina, etc.) with descriptions.
+* **BMI Calculator:** A simple tool to calculate Body Mass Index.
+* **Stopwatch:** A stopwatch with a "Lap" function for timing workouts.
+
+---
+
+## 🛠️ Tech Stack Used
 
 * React Native
 * Expo
-* React Navigation (pentru navigarea intre ecrane)
-* AsyncStorage (pentru salvarea datelor pe telefon)
-* Expo Sensors (pentru Contorul de Pasi)
+* React Navigation (for screen navigation)
+* AsyncStorage (for saving data on the device)
+* Expo Sensors (for the Step Counter)
 * React Native Vector Icons
 
 ---
 
-## 💡 Repere Tehnice (Ce am invatat)
+## 💡 Technical Highlights (What I Learned)
 
-Acest proiect a fost o oportunitate grozava de a ma concentra pe cateva aspecte tehnice cheie:
+This project was a great opportunity to focus on a few key technical concepts:
 
-* **Persistenta Datelor (CRUD):** Am folosit `AsyncStorage` pentru a permite utilizatorilor sa-si salveze (Create/Read) si sa-si stearga (Delete) antrenamentele. Datele raman pe telefon si dupa ce inchid aplicatia.
-* **Integrare Hardware:** M-am conectat la senzorii telefonului (Pedometer) folosind `expo-sensors` pentru Contorul de Pasi, inclusiv gestionarea cererilor de permisiune.
-* **Navigare Complexa:** Am construit fluxul de navigare combinand un `BottomTabNavigator` (pentru ecranele principale) cu `StackNavigator`-uri separate pentru functionalitati ca "Dieta" sau "Istoric".
-* **Fluxul de Date:** Am trimis date intre ecrane, atat prin `route.params` (pentru lucruri simple), cat si trimitand o functie *callback* de la Istoric la "Adauga Antrenament" pentru a actualiza lista imediat.
-* **Design Centralizat:** Am creat un fisier `theme.js` care contine toate culorile (`COLORS`), marimile (`SIZES`) si fonturile (`FONTS`). Asta a facut stilizarea mult mai usoara si mai consistenta.
+* **Data Persistence (CRUD):** I used `AsyncStorage` to allow users to save (Create/Read) and delete (Delete) their workouts. The data remains on the phone even after closing the app.
+* **Hardware Integration:** I connected to the phone's hardware sensors (Pedometer) using `expo-sensors` for the Step Counter, including handling permission requests.
+* **Complex Navigation:** I built the navigation flow by combining a `BottomTabNavigator` (for main sections) with separate `StackNavigator`s for specific features like "Diets" or "History".
+* **Data Flow:** I passed data between screens, both via `route.params` (for simple things) and by sending a *callback function* from the History screen to the "Add Workout" screen to update the list immediately.
+* **Centralized Design (Theming):** I created a `theme.js` file containing all colors (`COLORS`), sizes (`SIZES`), and fonts (`FONTS`). This made styling much easier and more consistent.
