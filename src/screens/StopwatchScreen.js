@@ -7,7 +7,7 @@ const formatTime = (time) => {
   const getSeconds = `0${seconds % 60}`.slice(-2);
   const minutes = Math.floor(seconds / 60);
   const getMinutes = `0${minutes % 60}`.slice(-2);
-  return `${getMinutes}:${getSeconds}:${getMilliseconds.slice(0,2)}`; // Afisam doar sutimi de secunda
+  return `${getMinutes}:${getSeconds}:${getMilliseconds.slice(0,2)}`; // We only display hundredths of a second
 };
 
 const StopwatchScreen = () => {
@@ -15,7 +15,7 @@ const StopwatchScreen = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [laps, setLaps] = useState([]);
   const intervalRef = useRef(null);
-  const lapTimeRef = useRef(0); // Poate fi folosit pentru a stoca timpul de start al turei
+  const lapTimeRef = useRef(0); // Can be used to store the lap start time
 
   const handleStartStop = () => {
     if (isRunning) {
@@ -25,25 +25,25 @@ const StopwatchScreen = () => {
       
       intervalRef.current = setInterval(() => {
         setTime(Date.now() - startTime);
-      }, 10); // Actualizam la 10ms pentru a afisa sutimile
+      }, 10); // Update every 10ms to display hundredths
     }
     setIsRunning(!isRunning);
   };
 
   const handleLapReset = () => {
     if (isRunning) {
-      // Logica pentru 'Tura' (Lap)
-      // Calculam durata turului curent: timpul total - suma duratelor anterioare
+      // Logic for 'Lap'
+      // Calculate the current lap duration: total time - sum of previous durations
       const lastLapTotalTime = laps.reduce((acc, curr) => acc + curr.rawDuration, 0);
       const currentLapDuration = time - lastLapTotalTime;
 
       setLaps(prevLaps => [...prevLaps, {
         id: prevLaps.length + 1,
-        time: formatTime(time), // Timpul total la care s-a apasat 'Lap'
-        rawDuration: currentLapDuration // Stocam durata bruta (ms) pentru calcule viitoare
+        time: formatTime(time), // Total time when 'Lap' was pressed
+        rawDuration: currentLapDuration // Store the raw duration (ms) for future calculations
       }]);
     } else {
-      // Logica pentru 'Resetare'
+      // Logic for 'Reset'
       setTime(0);
       setLaps([]);
       lapTimeRef.current = 0;
@@ -58,20 +58,20 @@ const StopwatchScreen = () => {
           style={[styles.button, isRunning ? styles.stopButton : styles.startButton]}
           onPress={handleStartStop}
         >
-          {/* Am corectat textul in 'Start' */}
+          {/* Corrected the text to 'Start' */}
           <Text style={styles.buttonText}>{isRunning ? 'Stop' : 'Start'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.lapResetButton]}
           onPress={handleLapReset}
-          // Butonul e dezactivat doar cand nu ruleaza si timpul e 0
+          // Button is disabled only when not running and time is 0
           disabled={!isRunning && time === 0}
         >
           <Text style={styles.buttonText}>{isRunning ? 'Tura' : 'Resetare'}</Text>
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.lapsContainer}>
-        {/* Afisam turele in ordine inversa (cea mai noua sus) */}
+        {/* Display laps in reverse order (newest first) */}
         {laps.map((lap, index) => (
           <View key={lap.id} style={styles.lapItem}>
             <Text style={styles.lapText}>Tura {laps.length - index}: {lap.time}</Text>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     fontSize: 64,
     fontWeight: '200',
     marginBottom: 40,
-    // Folosim font-uri specifice platformei pentru un look "nativ"
+    // Use platform-specific fonts for a "native" look
     fontFamily: Platform.OS === 'ios' ? 'HelveticaNeue-UltraLight' : 'sans-serif-light',
   },
   buttonRow: {

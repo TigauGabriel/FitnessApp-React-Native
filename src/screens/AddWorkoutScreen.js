@@ -13,7 +13,7 @@ import {
 import { COLORS, SIZES, FONTS, SHADOWS } from '../constants/theme';
 
 const AddWorkoutScreen = ({ navigation, route }) => {
-  // Pre-umple data cu ziua curenta in format YYYY-MM-DD
+  // Pre-fill the date with the current day in YYYY-MM-DD format
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [type, setType] = useState('');
   const [duration, setDuration] = useState('');
@@ -26,15 +26,15 @@ const AddWorkoutScreen = ({ navigation, route }) => {
     }
 
     const newWorkout = {
-      id: Date.now().toString(), // ID unic simplu, bazat pe timestamp
+      id: Date.now().toString(), // Simple unique ID, based on timestamp
       date,
       type,
       duration,
       details,
     };
 
-    // Folosim un callback din route.params pentru a trimite datele inapoi
-    // la ecranul anterior (WorkoutHistoryScreen) fara a folosi state management
+    // Use a callback from route.params to send data back
+    // to the previous screen (WorkoutHistoryScreen) without using state management
     if (route.params?.addWorkoutToListCallback) {
       route.params.addWorkoutToListCallback(newWorkout);
       navigation.goBack(); 
@@ -95,7 +95,7 @@ const AddWorkoutScreen = ({ navigation, route }) => {
                     placeholder="Ex: Piept si Triceps, 5km in parc cu ritm alert"
                     multiline
                     numberOfLines={4}
-                    textAlignVertical="top" // Necesar pentru alinierea textului pe Android
+                    textAlignVertical="top" // Necessary for text alignment on Android
                     placeholderTextColor={COLORS.mediumGray}
                 />
             </View>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: SIZES.medium,
-    paddingBottom: SIZES.xlarge, // Spatiu suplimentar jos pentru scroll
+    paddingBottom: SIZES.xlarge, // Extra space at the bottom for scrolling
   },
   headerTitle: {
     ...FONTS.h2,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium,
   },
   multilineInput: {
-    minHeight: 100, // Asigura inaltimea minima pentru textul multiline
+    minHeight: 100, // Ensures minimum height for the multiline text
     paddingTop: SIZES.small, 
   },
   button: {

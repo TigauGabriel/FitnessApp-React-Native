@@ -2,17 +2,17 @@ import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 export const COLORS = {
-  primary: '#4CAF50', // Verde - Culoare principala (fitness)
-  secondary: '#607D8B', // Gri-Albastrui - Culoare secundara
-  accent: '#FFC107', // Galben - Accent, Energie
+  primary: '#4CAF50', // Green - Main color (fitness)
+  secondary: '#607D8B', // Bluish-Gray - Secondary color
+  accent: '#FFC107', // Yellow - Accent, Energy
 
   white: '#FFFFFF',
   black: '#000000',
 
-  lightGray: '#F8F9FA', // Fundal general (foarte deschis)
-  mediumGray: '#CED4DA', // Borduri / elemente inactive
-  darkGray: '#343A40', // Text principal (inchis)
-  textGray: '#6C757D', // Text secundar (gri)
+  lightGray: '#F8F9FA', // General background (very light)
+  mediumGray: '#CED4DA', // Borders / inactive elements
+  darkGray: '#343A40', // Main text (dark)
+  textGray: '#6C757D', // Secondary text (gray)
 
   success: '#28A745',
   warning: '#FFC107',
@@ -29,7 +29,7 @@ export const SIZES = {
   xlarge: 24,
   xxlarge: 32,
 
-  // Dimensiunile ecranului
+  // Screen dimensions
   width,
   height,
 };

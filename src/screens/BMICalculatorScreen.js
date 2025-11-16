@@ -14,8 +14,8 @@ import { COLORS, SIZES, FONTS, SHADOWS } from '../constants/theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /**
- * Functie helper pentru a returna o culoare specifica
- * in functie de categoria IMC.
+ * Helper function to return a specific color
+ * based on the BMI category.
  */
 const getCategoryColor = (category) => {
     if (category === 'Subponderal') return COLORS.info;
@@ -36,7 +36,7 @@ const BMICalculatorScreen = () => {
     const h = parseFloat(height);
     const w = parseFloat(weight);
 
-    // Validare input
+    // Input validation
     if (!h || !w || h <= 0 || w <= 0) {
       Alert.alert('Date Invalide', 'Te rog introdu valori valide pentru inaltime si greutate.');
       setBmi(null);
@@ -44,12 +44,12 @@ const BMICalculatorScreen = () => {
       return;
     }
 
-    // Formula IMC: greutate (kg) / (inaltime (m) * inaltime (m))
+    // BMI Formula: weight (kg) / (height (m) * height (m))
     const heightInMeters = h / 100;
     const bmiValue = w / (heightInMeters * heightInMeters);
     setBmi(bmiValue.toFixed(1));
 
-    // Stabilirea categoriei
+    // Set the category
     if (bmiValue < 18.5) setBmiCategory('Subponderal');
     else if (bmiValue < 24.9) setBmiCategory('Greutate normala');
     else if (bmiValue < 29.9) setBmiCategory('Supraponderal');
@@ -93,7 +93,7 @@ const BMICalculatorScreen = () => {
               <Text style={styles.buttonText}>Calculeaza IMC</Text>
           </TouchableOpacity>
 
-          {/* Afisare conditionata a rezultatului */}
+          {/* Conditional rendering of the result */}
           {bmi && (
             <View style={[styles.resultContainer, SHADOWS.medium, { borderColor: getCategoryColor(bmiCategory) }]}>
                 <Text style={styles.resultLabel}>IMC-ul tau este:</Text>
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     paddingVertical: SIZES.base / 2,
     paddingHorizontal: SIZES.medium,
     borderRadius: SIZES.base,
-    overflow: 'hidden', // Asigura ca borderRadius se aplica pe backgroundColor
+    overflow: 'hidden', // Ensures borderRadius is applied over the backgroundColor
     marginTop: SIZES.small,
   },
 });

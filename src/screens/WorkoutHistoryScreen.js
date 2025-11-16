@@ -12,10 +12,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLORS, SIZES, FONTS, SHADOWS } from '../constants/theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const STORAGE_KEY = '@FitnessApp:workouts'; // Cheia unica pentru AsyncStorage
+const STORAGE_KEY = '@FitnessApp:workouts'; // Unique key for AsyncStorage
 
-// Date de test, folosite doar la prima rulare a aplicatiei
-// sau daca storage-ul este gol.
+// Mock data, used only on the first app run
+// or if the storage is empty.
 const MOCK_WORKOUTS = [
   { id: '1', date: '2025-05-20', type: 'Alergare Parc', duration: '35 min', distance: '5.2 km', details: 'Ritm constant, vreme placuta.' },
   { id: '2', date: '2025-05-21', type: 'Forta Acasa', duration: '50 min', details: 'Antrenament full body cu greutati mici.' },
@@ -26,8 +26,8 @@ const WorkoutHistoryScreen = ({ navigation }) => {
   const [workouts, setWorkouts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // [useEffect] Ruleaza o singura data la montarea componentei
-  // pentru a incarca datele salvate din AsyncStorage.
+  // [useEffect] Runs once on component mount
+  // to load the saved data from AsyncStorage.
   useEffect(() => {
     const loadWorkouts = async () => {
       try {
@@ -35,27 +35,27 @@ const WorkoutHistoryScreen = ({ navigation }) => {
         if (storedWorkouts !== null) {
           setWorkouts(JSON.parse(storedWorkouts));
         } else {
-          // Daca nu exista date salvate, folosim datele mock
+          // If no saved data exists, we use the mock data
           setWorkouts(MOCK_WORKOUTS);
         }
       } catch (e) {
         console.error("Eroare la incarcarea antrenamentelor:", e);
         Alert.alert("Eroare", "Nu s-au putut incărca antrenamentele salvate.");
-        setWorkouts(MOCK_WORKOUTS); // Fallback la mock data
+        setWorkouts(MOCK_WORKOUTS); // Fallback to mock data
       } finally {
         setIsLoading(false);
       }
     };
 
     loadWorkouts();
-  }, []); // [] asigura rularea o singura data
+  }, []); // [] ensures this runs only once
 
-  // [useEffect] Ruleaza de fiecare data cand `workouts` se schimba
-  // pentru a salva noua lista in AsyncStorage.
+  // [useEffect] Runs every time `workouts` changes
+  // to save the new list to AsyncStorage.
   useEffect(() => {
-    // Verificam !isLoading pentru a preveni o cursa (race condition)
-    // in care salvam lista goala inapoi in storage inainte ca
-    // incarcarea initiala sa se fi terminat.
+    // We check !isLoading to prevent a race condition
+    // where we might save an empty list back to storage before
+    // the initial load has finished.
     if (!isLoading) {
       const saveWorkouts = async () => {
         try {
@@ -69,13 +69,13 @@ const WorkoutHistoryScreen = ({ navigation }) => {
     }
   }, [workouts, isLoading]);
 
-  // [useCallback] Memoizam functia pentru a o putea pasa
-  // in `navigation.setOptions` fara a crea o noua referinta la fiecare randare.
+  // [useCallback] We memoize the function so we can pass it
+  // to `navigation.setOptions` without creating a new reference on every render.
   const addWorkoutToList = useCallback((newWorkout) => {
     setWorkouts(prevWorkouts => [newWorkout, ...prevWorkouts]);
   }, []);
 
-  // [useCallback] Memoizam functia de stergere.
+  // [useCallback] We memoize the delete function.
   const handleDeleteWorkout = useCallback((workoutIdToDelete) => {
     Alert.alert(
       "Confirmare Stergere",
@@ -96,14 +96,14 @@ const WorkoutHistoryScreen = ({ navigation }) => {
     );
   }, []);
 
-  // [useEffect] Seteaza butonul de "+" din header-ul de navigare.
-  // Depinde de `navigation` si de functia memoizata `addWorkoutToList`.
+  // [useEffect] Sets the "+" button in the navigation header.
+  // Depends on `navigation` and the memoized `addWorkoutToList` function.
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
           onPress={() => navigation.navigate('AddWorkout', { 
-            // Trimitem functia de callback ca parametru la ecranul de adaugare
+            // We send the callback function as a param to the add screen
             addWorkoutToListCallback: addWorkoutToList 
           })}
           style={{ marginRight: SIZES.medium }}
@@ -134,7 +134,7 @@ const WorkoutHistoryScreen = ({ navigation }) => {
     </View>
   );
 
-  // Afiseaza starea de incarcare
+  // Display the loading state
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -144,7 +144,7 @@ const WorkoutHistoryScreen = ({ navigation }) => {
     );
   }
 
-  // Afiseaza lista sau starea de "gol"
+  // Display the list or the "empty" state
   return (
     <View style={styles.container}>
       {workouts.length > 0 ? (

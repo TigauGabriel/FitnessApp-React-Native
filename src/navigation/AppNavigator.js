@@ -18,8 +18,8 @@ const DietStack = createStackNavigator();
 const HistoryStack = createStackNavigator();
 
 /**
- * Stack Navigator pentru fluxul de "Planuri Alimentare".
- * Permite navigarea de la lista la detaliul unui plan.
+ * Stack Navigator for the "Diet Plans" flow.
+ * Allows navigation from the list to plan details.
  */
 function DietPlansFeatureStack() { 
   return (
@@ -34,7 +34,7 @@ function DietPlansFeatureStack() {
       <DietStack.Screen 
         name="FoodPlanDetail" 
         component={FoodPlanDetailScreen} 
-        // Titlul header-ului este setat dinamic pe baza parametrului trimis in ruta
+        // Header title is set dynamically based on route params
         options={({ route }) => ({ title: route.params.plan.title })} 
       />
     </DietStack.Navigator>
@@ -42,8 +42,8 @@ function DietPlansFeatureStack() {
 }
 
 /**
- * Stack Navigator pentru fluxul de "Istoric Antrenamente".
- * Permite navigarea de la lista la ecranul de adaugare.
+ * Stack Navigator for the "Workout History" flow.
+ * Allows navigation from the list to the add screen.
  */
 function HistoryFeatureStack() {
   return (
@@ -70,8 +70,8 @@ function HistoryFeatureStack() {
 
 
 /**
- * Navigatorul principal (Bottom Tab Navigator).
- * Combina ecrane simple cu Stack-uri "nested".
+ * The main app navigator (Bottom Tab Navigator).
+ * Combines simple screens with nested Stacks.
  */
 function AppNavigator() {
   return (
@@ -79,7 +79,7 @@ function AppNavigator() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          // Logica pentru iconite active/inactive
+          // Logic for active/inactive icons
           if (route.name === 'Acasa') iconName = focused ? 'home' : 'home-outline';
           else if (route.name === 'HistoryTab') iconName = focused ? 'list-circle' : 'list-circle-outline';
           else if (route.name === 'Pasi') iconName = focused ? 'walk' : 'walk-outline';
@@ -104,7 +104,7 @@ function AppNavigator() {
             fontWeight: '600',
         },
         
-        // Stilizare globala pentru Header-ul Tab-urilor
+        // Global styling for Tab Headers
         headerStyle: {
             backgroundColor: COLORS.primary,
             shadowColor: COLORS.black, 
@@ -115,32 +115,32 @@ function AppNavigator() {
             fontWeight: 'bold',
         },
         
-        // Ascunde header-ul global al Tab-ului pentru ecranele care sunt Stack-uri
-        // (deoarece acele Stack-uri isi vor defini propriul header)
+        // Hide the global Tab header for screens that are Stacks
+        // (because those Stacks will define their own header)
         headerShown: !['DietsTab', 'HistoryTab'].includes(route.name),
       })}
     >
-      {/* Ecrane simple care folosesc header-ul global al Tab-ului */}
+      {/* Simple screens using the global Tab header */}
       <Tab.Screen name="Acasa" component={HomeScreen} />
       <Tab.Screen name="Pasi" component={StepCounterScreen} />
       <Tab.Screen name="Cronometru" component={StopwatchScreen} />
       <Tab.Screen name="IMC" component={BMICalculatorScreen} />
 
-      {/* Ecrane "nested" (Stack-uri) care isi folosesc propriul header */}
+      {/* Nested screens (Stacks) that use their own header */}
       <Tab.Screen
-        name="HistoryTab" // Nume intern distinct pentru ruta Tab
+        name="HistoryTab" // Internal distinct name for the Tab route
         component={HistoryFeatureStack}
         options={{
-            title: 'Istoric', // Titlul afisat pe tab-ul din bara de jos
-            // headerShown: false este gestionat de logica globala din screenOptions
+            title: 'Istoric', // Title displayed on the bottom tab
+            // headerShown: false is handled by the global screenOptions logic
         }}
       />
       <Tab.Screen
-        name="DietsTab" // Nume intern distinct pentru ruta Tab
+        name="DietsTab" // Internal distinct name for the Tab route
         component={DietPlansFeatureStack}
         options={{
-            title: 'Planuri Diete', // Titlul afisat pe tab-ul din bara de jos
-            // headerShown: false este gestionat de logica globala din screenOptions
+            title: 'Planuri Diete', // Title displayed on the bottom tab
+            // headerShown: false is handled by the global screenOptions logic
         }}
       />
     </Tab.Navigator>

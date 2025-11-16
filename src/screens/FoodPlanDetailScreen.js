@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Image, ScrollView, Platform } from 'react-nativ
 import { COLORS, SIZES, FONTS, SHADOWS } from '../constants/theme';
 
 /**
- * Componenta reutilizabila pentru a afisa o sectiune de informatii
- * cu un titlu si o lista de puncte (ex. Beneficii, Alimente).
+ * Reusable component to display an info section
+ * with a title and a list of bullet points (e.g., Benefits, Foods).
  */
 const InfoSection = ({ title, items }) => {
   if (!items || items.length === 0) return null;
@@ -26,17 +26,17 @@ const FoodPlanDetailScreen = ({ route }) => {
 
   return (
     <ScrollView style={styles.container}>
-        {/* Header-ul principal cu imaginea si titlul suprapus */}
+        {/* Main header with the image and overlaid title */}
         <View style={styles.imageHeaderContainer}>
-            {/* Imaginea de fundal a header-ului */}
+            {/* Header background image */}
             <Image source={plan.image} style={styles.image} />
-            {/* Overlay semi-transparent pentru lizibilitate text */}
+            {/* Semi-transparent overlay for text readability */}
             <View style={styles.imageOverlay} />
-            {/* Titlul pozitionat peste imagine */}
+            {/* Title positioned over the image */}
             <Text style={styles.imageTitle}>{plan.title}</Text>
         </View>
 
-        {/* Container pentru continutul principal (descriere, beneficii etc.) */}
+        {/* Container for the main content (description, benefits, etc.) */}
         <View style={styles.contentContainer}>
             <View style={[styles.sectionContainer, SHADOWS.light]}>
                 <Text style={styles.sectionTitle}>Descriere Completa:</Text>
@@ -59,38 +59,38 @@ const styles = StyleSheet.create({
   imageHeaderContainer: {
     width: '100%',
     height: 300,
-    backgroundColor: COLORS.darkGray, // Fundal de fallback (daca imaginea nu se incarca)
-    position: 'relative', // Necesar pentru a pozitiona absolut copiii
-    justifyContent: 'flex-end', // Aliniaza titlul la baza containerului
+    backgroundColor: COLORS.darkGray, // Fallback background (if image fails to load)
+    position: 'relative', // Necessary for absolute positioning of children
+    justifyContent: 'flex-end', // Aligns title to the bottom
   },
   image: {
-    ...StyleSheet.absoluteFillObject, // Umple complet containerul parinte
+    ...StyleSheet.absoluteFillObject, // Fills the parent container completely
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
   },
   imageOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Suprapunere neagra semi-transparenta
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent black overlay
   },
   imageTitle: {
     ...FONTS.h1,
     color: COLORS.white,
     paddingHorizontal: SIZES.medium,
     paddingBottom: SIZES.medium,
-    // Umbra textului pentru lizibilitate pe orice imagine
+    // Text shadow for max readability on any image
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 8,
-    position: 'relative', // Pozitionare relativa pentru a sta peste overlay
+    position: 'relative', // Positioned relatively to stay above the overlay
   },
   contentContainer: {
     padding: SIZES.medium,
     backgroundColor: COLORS.lightGray,
-    borderTopLeftRadius: SIZES.large, // Rotunjirea colturilor de sus
+    borderTopLeftRadius: SIZES.large, // Rounds the top corners
     borderTopRightRadius: SIZES.large,
-    marginTop: -SIZES.large, // Efect "pull-up": trage continutul peste baza imaginii
-    paddingTop: SIZES.xlarge, // Compenseaza pentru marginTop negativ
+    marginTop: -SIZES.large, // "Pull-up" effect: pulls the content over the image base
+    paddingTop: SIZES.xlarge, // Compensates for the negative marginTop
   },
   description: {
     ...FONTS.body2,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.medium,
     borderWidth: 1,
     borderColor: '#E8E8E8',
-    ...SHADOWS.light, // Aplica umbra definita in tema
+    ...SHADOWS.light, // Apply shadow defined in theme
   },
   sectionTitle: {
     ...FONTS.h3,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
       borderRadius: 3,
       backgroundColor: COLORS.primary,
       marginRight: SIZES.small,
-      marginTop: 8, // Aliniere manuala cu textul
+      marginTop: 8, // Manual alignment with the text
   },
   sectionItem: {
     ...FONTS.body2,

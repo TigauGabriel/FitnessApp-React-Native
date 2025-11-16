@@ -4,8 +4,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { COLORS, SIZES, FONTS, SHADOWS } from '../constants/theme';
 
 /**
- * Componenta reutilizabila pentru cardurile de functionalitati
- * afisate pe ecranul de pornire.
+ * Reusable component for the feature cards
+ * displayed on the home screen.
  */
 const FeatureCard = ({ icon, title, subtitle, onPress, color }) => (
   <TouchableOpacity style={[styles.card, SHADOWS.light]} onPress={onPress}>
@@ -23,13 +23,13 @@ const FeatureCard = ({ icon, title, subtitle, onPress, color }) => (
 const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
-        {/* Sectiunea de Bun Venit */}
+        {/* Welcome Section */}
         <View style={styles.header}>
             <Text style={styles.headerTitle}>Salut, Gabi!</Text>
             <Text style={styles.headerSubtitle}>Esti gata pentru o zi activa?</Text>
         </View>
 
-        {/* Sectiunea de Functionalitati */}
+        {/* Features Section */}
         <View style={styles.featuresContainer}>
             <Text style={styles.sectionTitle}>Acces Rapid</Text>
             <FeatureCard

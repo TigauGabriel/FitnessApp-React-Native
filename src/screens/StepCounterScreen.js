@@ -19,8 +19,8 @@ const StepCounterScreen = () => {
   const [showOpenSettingsButton, setShowOpenSettingsButton] = useState(false);
 
   /**
-   * Preia numarul total de pasi de la inceputul zilei curente.
-   * Este memoizata pentru a fi folosita in interiorul `initializePedometer`.
+   * Fetches the total step count since the start of the current day.
+   * It's memoized to be used inside `initializePedometer`.
    */
   const fetchAndUpdateTodaysSteps = useCallback(async () => {
     const startOfDay = new Date();
@@ -37,15 +37,15 @@ const StepCounterScreen = () => {
   }, []);
 
   /**
-   * Functia principala de initializare.
-   * Verifica disponibilitatea, cere permisiunea si porneste listener-ul.
-   * Memoizata cu useCallback pentru a fi folosita stabil in useEffect.
+   * Main initialization function.
+   * Checks availability, requests permission, and starts the listener.
+   * Memoized with useCallback to be used stably in useEffect.
    */
   const initializePedometer = useCallback(async (isManualRetry = false) => {
     if (isManualRetry) {
         setLoading(true);
         setErrorMessage('');
-        setShowOpenSettingsButton(false); // Resetare la reincercare
+        setShowOpenSettingsButton(false); // Reset on retry
     }
     
     let newSubscription = null;
@@ -69,7 +69,7 @@ const StepCounterScreen = () => {
         setShowOpenSettingsButton(false);
         await fetchAndUpdateTodaysSteps();
 
-        // Porneste listener-ul care urmareste pasii in timp real
+        // Starts the listener that watches steps in real-time
         newSubscription = Pedometer.watchStepCount(_update => {
           fetchAndUpdateTodaysSteps();
         });
@@ -77,8 +77,8 @@ const StepCounterScreen = () => {
         setPermissionGranted(false);
         let specificErrorMessage = "Permisiunea pentru accesarea pedometrului nu a fost acordata.";
 
-        // Cazul special: permisiunea a fost refuzata permanent (cu 'Nu mai intreba').
-        // Utilizatorul trebuie sa o activeze manual din Setarile telefonului.
+        // Special case: permission was permanently denied (with 'Don't ask again').
+        // The user must manually enable it from the phone's Settings.
         if (permissionDetails.status === 'denied' && !permissionDetails.canAskAgain) {
           specificErrorMessage += "\n\nTe rugam sa activezi manual permisiunea 'Activitate Fizica' pentru aplicatie din Setarile telefonului.";
           setShowOpenSettingsButton(true);
@@ -98,9 +98,9 @@ const StepCounterScreen = () => {
       }
     }
     return newSubscription;
-  }, [fetchAndUpdateTodaysSteps]); // Depinde de functia memoizata
+  }, [fetchAndUpdateTodaysSteps]); // Depends on the memoized function
 
-  // Efect pentru initializare si cleanup
+  // Effect for initialization and cleanup
   useEffect(() => {
     let currentSubscription = null;
 
@@ -108,22 +108,22 @@ const StepCounterScreen = () => {
         setLoading(true);
         setErrorMessage('');
         setShowOpenSettingsButton(false);
-        currentSubscription = await initializePedometer(false); // Apel initial
-        setLoading(false); // Opreste incarcarea dupa ce setup-ul s-a terminat
+        currentSubscription = await initializePedometer(false); // Initial call
+        setLoading(false); // Stop loading after setup is complete
     };
 
     setup();
 
     return () => {
-      // Functia de cleanup: Opreste abonamentul la senzor cand componenta se demonteaza
+      // Cleanup function: Stops the sensor subscription when the component unmounts
       if (currentSubscription) {
         currentSubscription.remove();
       }
     };
-  }, [initializePedometer]); // Se re-ruleaza doar daca referinta `initializePedometer` se schimba
+  }, [initializePedometer]); // Re-runs only if the `initializePedometer` reference changes
 
   const handleRetry = () => {
-    initializePedometer(true); // Apeleaza cu flag de retry manual
+    initializePedometer(true); // Calls with the manual retry flag
   };
 
   if (loading) {
@@ -146,7 +146,7 @@ const StepCounterScreen = () => {
               <View style={styles.buttonContainer}>
                 <Button
                   title="Deschide Setarile Aplicatiei"
-                  onPress={() => Linking.openSettings()} // Deschide setarile native ale aplicatiei
+                  onPress={() => Linking.openSettings()} // Opens the native app settings
                   color="#00796b"
                 />
               </View>

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { COLORS, SIZES, FONTS, SHADOWS } from '../constants/theme';
 
-// Datele pentru planurile alimentare.
+// Data for the diet plans.
 const DIET_PLANS_DATA = [
   {
     id: '1',
@@ -25,7 +25,7 @@ const DIET_PLANS_DATA = [
     title: 'Plan Alimentar Ketogenic (Keto)',
     shortDescription: 'Scazut in carbohidrati, moderat in proteine, bogat in grasimi.',
     image: require('../assets/images/diet_plan_2.png'),
-    fullDescription: "Dieta Ketogenica (Keto) implica reducerea drastica a aportului de carbohidrati si inlocuirea acestora cu grasimi. Aceasta reducere a carbohidratilor pune corpul intr-o stare metabolica numita cetoza, in care devine foarte eficient in arderea grasimilor pentru energie.", 
+    fullDescription: "Dieta Ketogenica (Keto) implica reducerea drastica a aportului de carbohidrati si inlocuirea acestora cu grasimi. Aceasta reducere a carbohidratilor pune corpul intr-o stare metabolica numita cetoza, in care devine very eficient in arderea grasimilor pentru energie.", 
     benefits: ["Pierdere rapida in greutate", "Imbunatatirea controlului glicemic", "Energie constanta (dupa adaptare)", "Posibile beneficii neurologice"],
     exampleMeals: [
         "Mic Dejun: Omleta cu branza si avocado.",
@@ -106,7 +106,7 @@ const DietPlansLandingScreen = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
-        // ListHeaderComponent este folosit pentru a afisa un titlu deasupra listei
+        // ListHeaderComponent is used to display a title above the list
         ListHeaderComponent={<Text style={styles.listHeaderTitle}>Exploreaza Planuri Alimentare</Text>}
       />
     </View>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   itemTextContainer: {
-    flex: 1, // Permite textului sa ocupe spatiul disponibil
+    flex: 1, // Allows the text to take up the available space
     paddingRight: SIZES.base,
   },
   itemTitle: {
